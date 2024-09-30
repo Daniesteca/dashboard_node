@@ -1,31 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const conexion = require('../database/db');
-const mysql = require('mysql2');
 
-// const vistaPrincipal = (req, res)=>{
-//     conexion.query('SELECT * FROM articulos',(error, results)=>{
-//         if(error){
-//             throw error;
-//         }else{
-//             res.render('home',{results:results});
-//         }
-//     }) 
-//     // res.render('home')
-// }
 
+
+// Vista principal, siempre renderiza la página del dash
 const vistaPrincipal = async (req, res) => {
     try {
-        // Ejecuta las dos consultas de forma concurrente
-        const [articulosResults, totalesArticulosResults] = await Promise.all([
-            conexion.query('SELECT * FROM articulos'),
-            conexion.query('SELECT * FROM totales_articulos')
-        ]);
+        const [articulosResults] = await conexion.promise().query('SELECT * FROM articulos');
 
-        // Pasa los resultados a la vista
-        res.render('home', { articulos: articulosResults[0], totalesArticulos: totalesArticulosResults[0] });
+        // Renderiza siempre la página con los datos de articulosResults
+        res.render('home', { articulos: articulosResults });
+
     } catch (error) {
-        // Manejo de errores
         console.error(error);
         res.status(500).send('Error en la base de datos');
     }
@@ -39,8 +26,6 @@ const vistaNotifications = (req, res)=>{
     res.render('notifications')
 }
 
-
-
 const vistaArticulos = (req, res)=>{
     conexion.query('SELECT * FROM articulos',(error, results)=>{
         if(error){
@@ -52,35 +37,25 @@ const vistaArticulos = (req, res)=>{
 }
 
 
+// Nueva ruta para la consulta de stock, se usa para fetch
+const obtenerStock = async (req, res) => {
+    try {
+        const [totalesArticulosResults] = await conexion.promise().query('SELECT * FROM totales_articulos');
 
-// const totalStock = (req, res)=>{
-//     conexion.query('SELECT SUM(stock) total_stock',(error, results)=>{
-//         if(error){
-//             throw error;
-//         }else{
-//             res.render('home',{results:results});
-//         }
-//     })
-// }
+        const stock = totalesArticulosResults[0]?.stock; // Asegúrate de que 'stock' es el campo correcto
+        res.json({ stock }); // Enviar el stock como JSON para el fetch en el frontend
 
-
-// const totalStock = (req, res)=>{
-//     conexion.query('select * from totales_articulos',(error, results)=>{
-//         if(error){
-//             throw error;
-//         }else{
-//             console.log(results);
-//             console.log(JSON.stringify(results, null, 2));
-//             res.json(results[0]);
-//         }
-//     })
-// }
-
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener el stock');
+    }
+};
 
 module.exports={
     vistaPrincipal,
     vistaTables,
     vistaNotifications,
     vistaArticulos,
-    // totalStock
+    obtenerStock,
+    
 }
