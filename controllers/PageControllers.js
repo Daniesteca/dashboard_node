@@ -36,11 +36,27 @@ const vistaArticulos = (req, res)=>{
     })         
 }
 
+const vistaChartJs = (req, res)=>{
+    res.render('chart')
+}
 
-// Nueva ruta para la consulta de stock, se usa para fetch
+// Nueva ruta para la consulta de stock, se usa para fetch-------------------------------------------|
 const obtenerStock = async (req, res) => {
     try {
         const [totalesArticulosResults] = await conexion.promise().query('SELECT * FROM totales_articulos');
+
+        const stock = totalesArticulosResults[0]?.stock; // Asegúrate de que 'stock' es el campo correcto
+        res.json({ stock }); // Enviar el stock como JSON para el fetch en el frontend
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error al obtener el stock');
+    }
+};
+
+const obtenerGrafic = async (req, res) => {
+    try {
+        const [totalesArticulosResults] = await conexion.promise().query('SELECT descripcion , stock FROM articulos');
 
         const stock = totalesArticulosResults[0]?.stock; // Asegúrate de que 'stock' es el campo correcto
         res.json({ stock }); // Enviar el stock como JSON para el fetch en el frontend
@@ -56,6 +72,8 @@ module.exports={
     vistaTables,
     vistaNotifications,
     vistaArticulos,
+    vistaChartJs,
     obtenerStock,
+    obtenerGrafic,
     
 }
