@@ -82,7 +82,7 @@
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Completed Tasks</h5>
-                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
+                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i><span id="dataDisplay"></span></h3>
               </div>
               <div class="card-body">
                 <div class="chart-area">
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="row">
-          <!-- tasks -->
+          <!-- tasks (5)-->
           <div class="col-lg-6 col-md-12">
             <div class="card card-tasks">
               <div class="card-header ">
@@ -254,124 +254,31 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table tablesorter " id="">
+
+                  <table class="table tablesorter ">
                     <thead class=" text-primary">
-                      <tr>
-                        <th>
-                          Name
-                        </th>
-                        <th>
-                          Country
-                        </th>
-                        <th>
-                          City
-                        </th>
-                        <th class="text-center">
-                          Salary
-                        </th>
-                      </tr>
+                        <tr class=" text-white">
+                            <th scope="col">ID</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Stock</th>
+                          
+                        </tr>
+
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-center">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-center">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-center">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-center">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-center">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-center">
-                          $98,615
-                        </td>
-                      </tr>
+                        <% results.forEach((articulo)=> {%>
+                        
+                        
+                        <tr class=" text-white">
+                            <td><%= articulo.id %></td>
+                            <td><%= articulo.descripcion %></td>
+                            <td><%= articulo.precio %></td>
+                            <td><%= articulo.stock %></td>
+                        </tr>
+                    <% }) %>
                     </tbody>
-                  </table>
+                </table>
                 </div>
               </div>
             </div>
@@ -379,3 +286,4 @@
         </div>
       </div>
  <!-- termina la parte del dash que quiero traer -------------------------------------------------------------------------------------------------------------------------->
+<script src="dashboard.js"></script>
