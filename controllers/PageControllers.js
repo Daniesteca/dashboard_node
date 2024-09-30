@@ -54,16 +54,30 @@ const obtenerStock = async (req, res) => {
     }
 };
 
+// const obtenerGrafic = async (req, res) => {
+//     try {
+//         const [articulosResults] = await conexion.promise().query('SELECT * FROM articulos');
+
+//         const descripcion = articulosResults[0]?.descripcion;
+//         const stock = articulosResults[0]?.stock; // Asegúrate de que 'stock' es el campo correcto
+//         res.json({ descripcion, stock }); // Enviar el stock como JSON para el fetch en el frontend
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error en la base de datos');
+//     }
+// };
+
 const obtenerGrafic = async (req, res) => {
     try {
-        const [totalesArticulosResults] = await conexion.promise().query('SELECT descripcion , stock FROM articulos');
+        const [articulosResults] = await conexion.promise().query('SELECT * FROM articulos');
 
-        const stock = totalesArticulosResults[0]?.stock; // Asegúrate de que 'stock' es el campo correcto
-        res.json({ stock }); // Enviar el stock como JSON para el fetch en el frontend
+        // Enviar todos los resultados de la consulta
+        res.json(articulosResults); // Devuelve un array de artículos
 
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error al obtener el stock');
+        res.status(500).send('Error en la base de datos');
     }
 };
 
